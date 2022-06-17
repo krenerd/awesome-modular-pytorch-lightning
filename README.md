@@ -44,7 +44,7 @@ configs/utils/wandb.yaml
 ```
 these cascading config files are baked at the start of `train.py`, where configs are overriden in inverse order. These baked config files are logged under `configs/logs/{experiment_name}.(yaml/pkl/json)` for logging purpose.
 
-# List of papers implemented and how to use
+# List of techniques implemented and how to use
 
 ## Data Augmentation
 
@@ -120,22 +120,175 @@ transform: [
         {
           "name": "TorchTransforms",
           "args":
-            { "NAME": "RandomCrop", "ARGS": { "size": 32, "padding": 4 } },
+            { 
+              "NAME": "RandAugment",
+              "ARGS": { "num_ops": 2, "magnitude": 9 } 
+            },
         },
 ...
 ```
 Refer to: `configs/algorithms/data_augmentation/randaugment.yaml`
 
-### RandAugment
-
+### TrivialAugmentation
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
 ```
         {
           "name": "TorchTransforms",
           "args":
-            { "NAME": "RandomCrop", "ARGS": { "size": 32, "padding": 4 } },
+            {
+              "NAME": "TrivialAugmentWide",
+              "ARGS": { "num_magnitude_bins": 31 },
+            },
         },
 ...
 ```
+
+### Mixup
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+### CutMix
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+### CutOut
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+## Regularization
+
+### Label smoothing
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+### Weight decay
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+### DropOut(classification)
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+### R-Drop(classification)
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+## Loss
+
+### Knowledge Distillation soft loss
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+### Sharpness-aware minimization(SAM)
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+### PolyLoss
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+
+## Training
+
+### Gradient Clipping
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+### Stocahstic Weight Averaging(SWA)
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+## Pre-training
+
+### Fine-tuning from checkpoint
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+## Learning rate schedule
+
+### Cosine learning rate decay
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+### WarmUp
+- Paper: https://arxiv.org/abs/2103.10158
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/trivialaugment.yaml`
+```
+
+```
+
+# Using more from other libraries
+
+## Network architecture
+
+### timm 
+
+### torchvision.models
+
+## 
+
+### torchmetrics
+
+### 
 
 
 # Overview
