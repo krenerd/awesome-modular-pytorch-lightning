@@ -12,7 +12,6 @@ What is `modular-pytorch-Lightning-Collections⚡`(LightCollections⚡️) for?
   - WIP & future TODO:
     - Data augmentation from `albumentations`
     - TTA and TTAch
-    -
 
 
 ## How to run experiments
@@ -45,31 +44,135 @@ configs/utils/wandb.yaml
 ```
 these cascading config files are baked at the start of `train.py`, where configs are overriden in inverse order. These baked config files are logged under `configs/logs/{experiment_name}.(yaml/pkl/json)` for logging purpose.
 
-## Overview
+# List of papers implemented and how to use
 
+## Data Augmentation
+
+### RandomResizeCrop(ImageNet augmentation)
+
+- Paper: https://arxiv.org/abs/1409.4842
+- Note: Common data augmentation strategy for ImageNet using RandomResizedCrop.
+- Refer to: `configs/vision/data/imagenet.yaml`
+
+```
+transform: [
+    [
+      "trn",
+      [
+        {
+          "name": "RandomResizedCropAndInterpolation",
+          "args":
+            {
+              "scale": [0.08, 1.0],
+              "ratio": [0.75, 1.3333],
+              "interpolation": "random",
+            },
+        },
+        {
+          "name": "TorchTransforms",
+          "args": { "NAME": "RandomHorizontalFlip" },
+        },
+        # DATA AUGMENTATION(rand augment, auto augment, ...)
+        {
+          "name": "TorchTransforms",
+          "args":
+            {
+              "NAME": "ColorJitter",
+              "ARGS": { "brightness": 0.4, "contrast": 0.4, "saturation": 0.4 },
+            },
+        },
+      ],
+    ],
+    [
+      "val",
+      [
+        {
+          "name": "Resize",
+          "args": { "img_size": 224, "interpolation": "bilinear" },
+        },
+        {
+          "name": "TorchTransforms",
+          "args": { "NAME": "CenterCrop", "ARGS": { "size": 224 } },
+        },
+      ],
+    ],
+    [
+      "trn,val",
+      [
+        { "name": "ToTensor", "args": {} },
+        {
+          "name": "Normalize",
+          "args":
+            { "mean": [0.485, 0.456, 0.406], "std": [0.229, 0.224, 0.225] },
+        },
+      ],
+    ],
+  ]
+```
+
+### RandAugment
+
+- Paper: https://arxiv.org/abs/1909.13719
+- Note: Commonly used data augmentation strategy for image classification.
+- Refer to: `configs/algorithms/data_augmentation/randaugment.yaml`
+
+```
+        {
+          "name": "TorchTransforms",
+          "args":
+            { "NAME": "RandomCrop", "ARGS": { "size": 32, "padding": 4 } },
+        },
+...
+```
+Refer to: `configs/algorithms/data_augmentation/randaugment.yaml`
+
+### RandAugment
+
+```
+        {
+          "name": "TorchTransforms",
+          "args":
+            { "NAME": "RandomCrop", "ARGS": { "size": 32, "padding": 4 } },
+        },
+...
+```
+
+
+# Overview
+
+## LightningModules
+
+### Classifi
 - If not implemented yet, you may take an instance of `main.py: Experiment` and override any part of it.
 - Training procedure (`LightningModule`): List of available training procedures are listed in `lightning/trainers.py`
 - Model architectures:
   - Backbone models implemented in `torchvision.models` can be used.
   - Backbone models implemented in `timm` can be used.
   - Although we highly recommend using `timm`, as it is throughly evaluated and managed, custom implementations of some architectures are listed in `models/backbone/__init__.py`.
-- Dataset
-  - Dataset: currently only `torchvision` datasets are supported by `Experiment`, however you could use `torchvision.datasets.ImageFolder` to load from custom dataset.
-  - Transformations(data augmentation): Transforms must be listed in one in [`data/transforms/vision/__init__.py`]
+## Data
+Currently `torchvision` datasets are supported by `Experiment`, however you could use `torchvision.datasets.ImageFolder` to load from custom dataset.
+
+### Transformations(data augmentation): Transforms must be listed in one in [`data/transforms/vision/__init__.py`]
+
+
+## Utils
+
+### Optimizers
+
+####
+
+### Learning-rate schedules
+
+#### Warmup
+
+### Metrics
+
 - Other features
   - Optimizers
   - Metrics / loss
 
-## Timeline
+### `debug` flag
 
-- 220517 | Create object detection dataset.
-- 220517 | Implementation of ResNet-D and PreAct-ResNet.
-- 220508 | Working version of the repository on `Image Classification`.
-- 220504 | Create repository! Start of `awesome-modular-pytorch-lightning`.
-
-### Tracking progress
-
-- Project Dashboard: [\[Trello\]](https://trello.com/b/AnOjqk1F/awesome-modular-pytorch-lightning-development)
 
 ## About me
 
