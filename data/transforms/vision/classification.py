@@ -2,10 +2,7 @@ import math
 import random
 import warnings
 
-import torchvision
 import torchvision.transforms.functional as TF
-from torchvision.transforms.functional import InterpolationMode
-
 from data.transforms.base import _BaseTransform
 from data.transforms.vision.util import str2interpolation
 
@@ -153,30 +150,3 @@ class RandomResizedCropAndInterpolation(_BaseTransform):
         format_string += f", ratio={tuple(round(r, 4) for r in self.ratio)}"
         format_string += f", interpolation={interpolate_str})"
         return format_string
-
-
-"""
-Wrappers to specify the `interpolation` value as a string.
-"""
-
-
-class RandomRotation(torchvision.transforms.RandomRotation):
-    def __init__(
-        self,
-        interpolation: InterpolationMode = InterpolationMode.NEAREST,
-        **kwargs
-    ) -> None:
-        super().__init__(**kwargs)
-        if type(interpolation) == str:
-            self.interpolation = str2interpolation(self.interpolation)
-
-
-class TrivialAugmentWide(torchvision.transforms.TrivialAugmentWide):
-    def __init__(
-        self,
-        interpolation: InterpolationMode = InterpolationMode.NEAREST,
-        **kwargs
-    ) -> None:
-        super().__init__(**kwargs)
-        if type(interpolation) == str:
-            self.interpolation = str2interpolation(self.interpolation)

@@ -29,13 +29,17 @@ transform:
         },
         { "name": "TorchTransforms", "args": { "NAME": "RandomVerticalFlip" } },
         {
-          "name": "RandomRotation",
-          "args": { "degrees": [0, 360], "interpolation": "bilinear" },
+          "name": "TorchTransforms",
+          "args": { "NAME": "RandomRotation", "ARGS": { "degrees": [0, 360] } },
         },
 
         {
-          "name": "TrivialAugmentWide",
-          "args": {"num_magnitude_bins": 31, "interpolation": "bilinear"},
+          "name": "TorchTransforms",
+          "args":
+            {
+              "NAME": "TrivialAugmentWide",
+              "ARGS": { "num_magnitude_bins": 31 },
+            },
         },
       ],
     ],
